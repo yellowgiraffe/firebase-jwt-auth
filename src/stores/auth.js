@@ -15,12 +15,12 @@ export const useAuthStore = defineStore('auth', () => {
   });
   const error = ref('')
   const isLoading = ref(false)
-  const signup = async (payload) => {
+  const auth = async (payload, type) => {
     error.value = ''
     isLoading.value = true
     try {
       let response = await axios.post(
-        `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${apiKey}`,
+        `https://identitytoolkit.googleapis.com/v1/accounts:${type}?key=${apiKey}`,
         {
           ...payload,
           returnSecureToken: true
@@ -46,6 +46,15 @@ export const useAuthStore = defineStore('auth', () => {
         case('TOO_MANY_ATTEMPTS_TRY_LATER'):
           error.value = 'Too many attempts. Try again later'
           break;
+        case('EMAIL_NOT_FOUND'):
+          error.value = 'Email not found'
+          break;
+          case('INVALID_PASSWORD'):
+          error.value = 'Invalid password'
+          break;
+          case('USER_DISABLED'):
+          error.value = 'This user is disabled by administrator'
+          break;
         default:
           error.value = 'Unknown error'
           break;
@@ -53,5 +62,5 @@ export const useAuthStore = defineStore('auth', () => {
     }
     isLoading.value = false
   }
-  return { signup, userInfo, error, isLoading }
+  return { auth, userInfo, error, isLoading }
 })
