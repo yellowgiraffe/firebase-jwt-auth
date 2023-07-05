@@ -15,6 +15,7 @@ export const useAuthStore = defineStore('auth', () => {
   });
   const error = ref('')
   const isLoading = ref(false)
+
   const auth = async (payload, type) => {
     error.value = ''
     isLoading.value = true
@@ -33,9 +34,12 @@ export const useAuthStore = defineStore('auth', () => {
         refreshToken: response.data.refreshToken,
         expiresIn: response.data.expiresIn
       }
-      console.log(response.data);
+      localStorage.setItem('userTokens', JSON.stringify({
+        token: userInfo.value.token,
+        refreshToken: userInfo.value.refreshToken,
+        expiresIn:  userInfo.value.expiresIn
+      }))
     } catch(err) {
-      console.log('Error', err.response);
       switch(err.response.data.error.message) {
         case('EMAIL_EXISTS'):
           error.value = 'Email exists'
