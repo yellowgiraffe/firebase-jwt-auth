@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from 'vue'
 import { useAuthStore } from '../stores/auth'
+import { useRouter } from 'vue-router'
 import Button from 'primevue/button'
 import InputText from 'primevue/inputtext'
 import Message from 'primevue/message'
@@ -8,11 +9,14 @@ import LoaderSpinner from '../components/LoaderSpinner.vue'
 
 
 const authStore = useAuthStore()
+const router = useRouter()
+
 const email = ref()
 const password = ref()
 
-const signup = async () => {
-  await authStore.auth({email: email.value, password: password.value}, 'signUp')
+const signUp = async () => {
+  await authStore.auth({ email: email.value, password: password.value }, 'signUp')
+  router.push('/cars')
 }
 </script>
 
@@ -34,7 +38,7 @@ const signup = async () => {
     </div>
     <LoaderSpinner v-if="authStore.isLoading" />
     <div v-else class="flex flex-column gap-3">
-      <Button label="Sign up" @click="signup" />
+      <Button label="Sign up" @click="signUp" />
       <span>Are you already registered? <router-link to="/signin">Sign in</router-link></span>
     </div>
   </form>

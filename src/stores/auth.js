@@ -2,7 +2,7 @@ import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import axios from 'axios'
 
-const apiKey = 'AIzaSyAyd-Tc1ttkyNUfj_vVNduJvFaDWLZ2cOA'
+const apiKey = import.meta.env.VITE_API_KEY
 
 export const useAuthStore = defineStore('auth', () => {
   const userInfo = ref({
@@ -35,7 +35,7 @@ export const useAuthStore = defineStore('auth', () => {
       }
       console.log(response.data);
     } catch(err) {
-      console.log(err.response);
+      console.log('Error', err.response);
       switch(err.response.data.error.message) {
         case('EMAIL_EXISTS'):
           error.value = 'Email exists'
@@ -59,8 +59,10 @@ export const useAuthStore = defineStore('auth', () => {
           error.value = 'Unknown error'
           break;
       }
+      throw error.value
+    } finally {
+      isLoading.value = false
     }
-    isLoading.value = false
   }
   return { auth, userInfo, error, isLoading }
 })

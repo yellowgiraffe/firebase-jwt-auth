@@ -14,12 +14,12 @@ import App from './App.vue'
 import router from './router'
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAyd-Tc1ttkyNUfj_vVNduJvFaDWLZ2cOA",
-  authDomain: "my-app-466e8.firebaseapp.com",
-  projectId: "my-app-466e8",
-  storageBucket: "my-app-466e8.appspot.com",
-  messagingSenderId: "573128169625",
-  appId: "1:573128169625:web:e2270f50ca531aa5a50008"
+  apiKey: import.meta.env.VITE_API_KEY,
+  authDomain: 'my-app-466e8.firebaseapp.com',
+  projectId: 'my-app-466e8',
+  storageBucket: 'my-app-466e8.appspot.com',
+  messagingSenderId: '573128169625',
+  appId: '1:573128169625:web:e2270f50ca531aa5a50008'
 };
 
 initializeApp(firebaseConfig);
