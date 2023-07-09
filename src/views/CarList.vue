@@ -1,6 +1,6 @@
 <script setup>
 import { ref, onMounted } from 'vue'
-import axios from 'axios'
+import axiosApiInstance from '../api'
 
 import Card from 'primevue/card'
 import LoaderSpinner from '../components/LoaderSpinner.vue'
@@ -11,7 +11,7 @@ const isLoading = ref(false)
 const getCarList = async () => {
   try {
     isLoading.value = true
-    const response = await axios.get(`https://my-app-466e8-default-rtdb.europe-west1.firebasedatabase.app/cars.json`)
+    const response = await axiosApiInstance.get(`https://my-app-466e8-default-rtdb.europe-west1.firebasedatabase.app/cars.json`)
     cars.value = response.data
   } catch (err) {
     console.log(err.response)
